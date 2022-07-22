@@ -321,8 +321,13 @@ asm -c amd64 "
        
        level 23
 
- asm -c amd64 "
+// rdi = src_addr
+// rsi = size
 
-
+asm -c amd64 "
+  mov r9, 0
+  mov r10, 0
+for:
+   
 "| /challenge/embryoasm_level23 
 
