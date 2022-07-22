@@ -319,4 +319,10 @@ asm -c amd64 "
  endf:
        ret"| /challenge/embryoasm_level22
        
+       level 23
+
+ asm -c amd64 "
+
+
+"| /challenge/embryoasm_level23 
 
