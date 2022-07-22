@@ -84,7 +84,19 @@ mov rax, rdx" | /challenge/embryoasm_level5
 
 flag=pwn.college{gNaNQWgLQa0Kkte_G22woxwk8fv.QX4kTMsADOzQzW}
 
-        level6-soln1
+        level6
+div and xor instructions are not allowed
+asm -c amd64 "mov rax, 0
+              mov rbx, 0
+              mov al, dil
+              mov bx, si" | /challenge/embryoasm_level6
+flag=pwn.college{kGRT5DzVxLJwh3bkKJPHjQb0xGu.QX5kTMsADOzQzW}
+
+        level7
+
+asm -c amd64 "shr rdi, 32
+              mov al, dil" | /challenge/embryoasm_level7
+
 
  -Didn't understand what happened
 Solution Code: https://github.com/reusedbottle/flags/blob/main/pwn.college/embryoasm/6.py
@@ -272,6 +284,39 @@ endf:
 flag=pwn.college{4wJ-6rFUlRotvSDGkYGg95jC4qL.QXyEjMsADOzQzW}
 
            level 22
+//the foo functions input is rdi. 
+//the foo functions output will be stored in rax
+//ptr is a solution to operand size problems http://www.c-jump.com/CIS77/ASM/Instructions/I77_0250_ptr_pointer.htm
+//comparision should always be made on the same bit size
 
-
+asm -c amd64 "
+ mov rax, 0
+ cmp rdi,0
+ je endf
+ while:
+       cmp dword ptr [rdi], 0
+       je endf
+      
+       cmp byte ptr [rdi], 90
+       jg end1
+       
+       mov r8, rax
+       mov r9, rdi
+       mov rdi, [r9]
+       
+       mov r10, 0x403000
+       call r10
+       
+       mov rdi, r9
+       mov [rdi], rax
+    
+       mov rax, r8
+       inc rax
+      
+ end1:
+       inc rdi
+       jmp while
+ endf:
+       ret"| /challenge/embryoasm_level22
+       
 
